@@ -195,7 +195,7 @@ _(Are you using CCMath in your project? Let us know!)_
 
 ## License
 
-CCMath is distributed under the Apache-2.0 WITH LLVM-exception. See the LICENSE file for more information.
+CCMath is distributed under the Apache-2.0 WITH LLVM-exception. See the [LICENSE](https://github.com/Rinzii/ccmath/blob/main/LICENSE) file for more information.
 
 
 ## Special Thanks
