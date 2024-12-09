@@ -33,6 +33,7 @@ option(CCMATH_FIND_GBENCH_PACKAGE "Enable finding of google benchmark package" O
 option(CCMATH_INSTALL "Setup install and package steps" ${is_root_project})
 option(CCMATH_ENABLE_EXTENSIONS "Enable the extended ccmath library that adds helpful additional methods that are not defined by the standard" ${is_root_project})
 option(CCMATH_ENABLE_RUNTIME_SIMD "Enable SIMD optimization for runtime evaluation (does not effect compile time)" ON)
+option(CCMATH_DISABLE_FORCE_INLINE "Disable the use of force inline in ccmath" OFF)
 option(CCMATH_ENABLE_USER_DEFINED_OPTIMIZATION_MACROS "Enable user defined optimization macros instead of having ccmath define its own internal ones in cmake" OFF)
 option(CCMATH_DISABLE_ERRNO "Disable the use of errno in ccmath during runtime" OFF)
 
@@ -116,6 +117,10 @@ target_link_libraries(${PROJECT_NAME} INTERFACE
 
 if (CCMATH_ENABLE_RUNTIME_SIMD)
     target_compile_definitions(${PROJECT_NAME} INTERFACE CCM_CONFIG_USE_RT_SIMD)
+endif ()
+
+if (CCMATH_DISABLE_FORCE_INLINE)
+    target_compile_definitions(${PROJECT_NAME} INTERFACE CCM_CONFIG_NO_FORCED_INLINE)
 endif ()
 
 if (NOT CCMATH_ENABLE_USER_DEFINED_OPTIMIZATION_MACROS)
