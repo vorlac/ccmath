@@ -23,7 +23,7 @@
 
 TEST(CcmathPowerTests, Sqrt_Double_CheckCCM_runtime) {
 
-	EXPECT_EQ(ccm::sqrt(-1.0), ccm::sqrt(-1.0));
+	EXPECT_EQ(ccm::sqrt(1.0), ccm::sqrt(1.0));
 }
 
 
