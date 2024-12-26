@@ -51,6 +51,9 @@ if (CCMATH_BUILD_TESTS)
           GIT_TAG ${ABSEIL_VERSION}
   )
   FetchContent_MakeAvailable(abseil)
+
+
+
   target_include_directories(gtest::gtest PRIVATE ${ABSEIL_INCLUDE_DIRS})
   target_link_libraries(gtest::gtest PRIVATE ${ABSEIL_LIBRARIES})
 endif()
@@ -64,6 +67,7 @@ add_library(ccmath::ext ALIAS ${PROJECT_NAME})
 # Link GTest only if tests are enabled
 if (CCMATH_BUILD_TESTS)
   target_link_libraries(${PROJECT_NAME} INTERFACE gtest::gtest)
+  target_link_libraries(${PROJECT_NAME} INTERFACE ${ABSEIL_LIBRARIES})
 endif()
 
 # Link Google Benchmark only if benchmarks are enabled

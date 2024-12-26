@@ -6,9 +6,6 @@ if (NOT TARGET ccmath)
   find_package(ccmath CONFIG REQUIRED)
 endif ()
 
-# Include Abseil
-find_package(Abseil REQUIRED)
-
 add_library(${PROJECT_NAME} STATIC)
 add_library(ccmath::test ALIAS ${PROJECT_NAME})
 target_link_libraries(${PROJECT_NAME} PUBLIC
