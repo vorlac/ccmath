@@ -49,6 +49,9 @@ jobs:
       - name: System info
         run: wmic cpu get caption, deviceid, name, numberofcores, maxclockspeed, status
 
+      - name: Check coreinfo
+        run: powershell -Command "& { (New-Object System.Net.WebClient).DownloadFile('https://download.sysinternals.com/files/Coreinfo.zip', '.\Coreinfo.zip'); Expand-Archive -Path '.\Coreinfo.zip' -DestinationPath . -Force; .\Coreinfo64.exe -c -f }"
+
       - name: Configure
         run: cmake --preset="${{ matrix.configurePreset }}" -DCMAKE_CXX_STANDARD="${{ matrix.cxx_version }}"
 
