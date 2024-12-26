@@ -45,6 +45,7 @@ jobs:
             cxx_version: 20
 
     steps:
+      - uses: actions/checkout@v4
       - name: System info
         run: wmic cpu get caption, deviceid, name, numberofcores, maxclockspeed, status
 
