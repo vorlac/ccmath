@@ -46,17 +46,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - name: System info
-        run: wmic cpu get caption, deviceid, name, numberofcores, maxclockspeed, status
-
-      - name: Check coreinfo
-        run: powershell -Command "& { (New-Object System.Net.WebClient).DownloadFile('https://download.sysinternals.com/files/Coreinfo.zip', '.\Coreinfo.zip'); Expand-Archive -Path '.\Coreinfo.zip' -DestinationPath . -Force; .\Coreinfo64.exe -c -f }"
-
       - name: Configure
-        run: cmake --preset="${{ matrix.configurePreset }}" -DCMAKE_CXX_STANDARD="${{ matrix.cxx_version }}"
+        run: cmake --preset="${{ matrix.configurePreset }}" -DCMAKE_CXX_STANDARD="${{ matrix.cxx_version }} -DCCMATH_ENABLE_RUNTIME_SIMD=OFF"
 
       - name: Build
         run: cmake --build --preset="${{ matrix.buildPreset }}"
 
       - name: Test
-        run: ctest --preset="${{ matrix.testPreset }}" --output-on-failure --schedule-random -F
+        run: ctest --preset="${{ matrix.testPreset }}" --output-on-failure --debug
