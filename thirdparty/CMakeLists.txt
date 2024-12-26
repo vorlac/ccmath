@@ -4,6 +4,7 @@ include(FetchContent)
 
 set(CCMATH_BENCHMARK_VERSION v1.9.1)
 set(CCMATH_GTEST_VERSION v1.15.2)
+set(ABSEIL_VERSION v20231121.0)
 
 if (CCMATH_BUILD_BENCHMARKS)
   if (CMAKE_CXX_COMPILER_ID STREQUAL "IntelLLVM" OR CMAKE_CXX_COMPILER_ID STREQUAL "Intel")
@@ -43,6 +44,15 @@ if (CCMATH_BUILD_TESTS)
       add_library(gtest::gtest ALIAS gtest)
     endif()
   endif()
+
+  FetchContent_Declare(
+          abseil
+          GIT_REPOSITORY https://github.com/abseil/abseil-cpp.git
+          GIT_TAG ${ABSEIL_VERSION}
+  )
+  FetchContent_MakeAvailable(abseil)
+  target_include_directories(gtest::gtest PRIVATE ${ABSEIL_INCLUDE_DIRS})
+  target_link_libraries(gtest::gtest PRIVATE ${ABSEIL_LIBRARIES})
 endif()
 
 FetchContent_MakeAvailable(benchmark)
