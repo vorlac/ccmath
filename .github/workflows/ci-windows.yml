@@ -45,21 +45,8 @@ jobs:
             cxx_version: 20
 
     steps:
-      - name: Harden Runner
-        uses: step-security/harden-runner@v2.9.1
-        with:
-          egress-policy: audit
-
-      - uses: actions/checkout@v4
-
-      - name: Cache build
-        uses: actions/cache@v4
-        with:
-          path: |
-            ./**/CMakeFiles
-            ./**/CMakeCache.txt
-            ./**/out
-          key: ${{ runner.os }}-${{ matrix.name }}
+      - name: System info
+        run: wmic cpu get caption, deviceid, name, numberofcores, maxclockspeed, status
 
       - name: Configure
         run: cmake --preset="${{ matrix.configurePreset }}" -DCMAKE_CXX_STANDARD="${{ matrix.cxx_version }}"
