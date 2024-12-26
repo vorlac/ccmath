@@ -116,4 +116,9 @@ namespace ccm::support::fenv
 		}
 		return internal::rt_get_rounding_mode();
 	}
+
+	inline int get_rounding_mode_rt()
+	{
+		return internal::rt_get_rounding_mode();
+	}
 } // namespace ccm::support::fenv
