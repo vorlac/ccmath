@@ -22,17 +22,8 @@
 #include "absl/debugging/stacktrace.h"
 
 TEST(CcmathPowerTests, Sqrt_Double_CheckCCM_runtime) {
-	try {
-		EXPECT_EQ(ccm::sqrt(-1.0), ccm::sqrt(-1.0));
-	} catch (const std::exception& e) {
-		// Catch std::exception and its derived classes
-		absl::PrintStackTrace();
-		FAIL() << "Caught an exception: " << e.what();
-	} catch (...) {
-		// Catch any other type of exception
-		absl::PrintStackTrace();
-		FAIL() << "Caught an unknown exception.";
-	}
+
+	EXPECT_EQ(ccm::sqrt(-1.0), ccm::sqrt(-1.0));
 }
 
 
