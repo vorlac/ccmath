@@ -19,14 +19,6 @@
 #include <cmath>
 #include <limits>
 
-/*
-TEST(CcmathPowerTests, Sqrt_StaticAssert)
-{
-	//static_assert(ccm::sqrt(2.0) == ccm::sqrt(2.0), "ccm::sqrt is not a compile time constant!");
-}
-*/
-
-#include "gtest/gtest.h"
 #include "absl/debugging/stacktrace.h"
 
 TEST(CcmathPowerTests, Sqrt_Double_CheckCCM_runtime) {
