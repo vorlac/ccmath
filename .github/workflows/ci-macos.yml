@@ -170,7 +170,8 @@ jobs:
             -G Ninja \
             -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} \
             -DCMAKE_CXX_COMPILER=${{ matrix.compiler }}++ \
-            -DCMAKE_CXX_STANDARD=${{ matrix.cxx_standard }}
+            -DCMAKE_CXX_STANDARD=${{ matrix.cxx_standard }} \
+            -DCMAKE_NINJA_FORCE_RESPONSE_FILE=ON
 
       - name: Build
         run: |
