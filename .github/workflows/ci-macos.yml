@@ -14,7 +14,7 @@ permissions:
   contents: read
 
 jobs:
-  build:
+  build-m1:
     runs-on: macos-latest
     strategy:
       fail-fast: false
@@ -96,3 +96,87 @@ jobs:
 
       - name: Test
         run: ctest --preset="${{ matrix.testPreset }}" --output-on-failure --schedule-random -F
+
+  build-x86:
+    runs-on: macos-13
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: clang-debug-cxx17
+            build_type: Debug
+            compiler: clang
+            cxx_standard: 17
+
+          - name: clang-debug-cxx20
+            build_type: Debug
+            compiler: clang
+            cxx_standard: 20
+
+          - name: clang-release-cxx17
+            build_type: Release
+            compiler: clang
+            cxx_standard: 17
+
+          - name: clang-release-cxx20
+            build_type: Release
+            compiler: clang
+            cxx_standard: 20
+
+          - name: gcc-debug-cxx17
+            build_type: Debug
+            compiler: gcc
+            cxx_standard: 17
+
+          - name: gcc-debug-cxx20
+            build_type: Debug
+            compiler: gcc
+            cxx_standard: 20
+
+          - name: gcc-release-cxx17
+            build_type: Release
+            compiler: gcc
+            cxx_standard: 17
+
+          - name: gcc-release-cxx20
+            build_type: Release
+            compiler: gcc
+            cxx_standard: 20
+
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@v2.9.1
+        with:
+          egress-policy: audit
+
+      - uses: actions/checkout@v4
+
+      - name: Cache build
+        uses: actions/cache@v4
+        with:
+          path: |
+            build
+          key: ${{ runner.os }}-${{ matrix.name }}
+
+      - name: Install Dependencies
+        run: |
+          brew install ninja cmake
+
+      - name: Configure
+        run: |
+          mkdir -p build
+          cd build
+          cmake .. \
+            -G Ninja \
+            -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} \
+            -DCMAKE_CXX_COMPILER=${{ matrix.compiler }}++ \
+            -DCMAKE_CXX_STANDARD=${{ matrix.cxx_standard }}
+
+      - name: Build
+        run: |
+          cmake --build build
+
+      - name: Test
+        run: |
+          cd build
+          ctest --output-on-failure --schedule-random -F
